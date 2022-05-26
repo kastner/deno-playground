@@ -4,14 +4,20 @@ import { renderToString } from "https://esm.sh/react-dom@18.1.0/server";
 
 type TextProps<T extends React.ElementType> = {
   as?: T;
-  children: React.ReactNode;
-} & React.ComponentPropsWithoutRef<T>;
+  color?: "blue" | "green" | "black";
+};
 
-export const Text = <T extends React.ElementType>(
-  { as, children, ...restProps }: TextProps<T>,
+type Props<T extends React.ElementType> =
+  & React.PropsWithChildren<TextProps<T>>
+  & Omit<React.ComponentPropsWithoutRef<T>, keyof TextProps<T>>;
+
+export const Text = <T extends React.ElementType = "span">(
+  { as, color, children, ...restProps }: Props<T>,
 ) => {
   const Component = as || "span";
-  return <Component {...restProps}>{children}</Component>;
+
+  const style = color ? { style: { color } } : {};
+  return <Component {...restProps} {...style}>{children}</Component>;
 };
 
 function handler(_req: Request): Response {

@@ -6,5 +6,11 @@
     "https://deno.land": true,
     "https://x.nest.land": true,
     "https://crux.land": true
-  }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
 }

@@ -1,12 +1,18 @@
-/** @jsx h */
 import { serve } from "https://deno.land/std@0.137.0/http/server.ts";
-import { h } from "https://esm.sh/preact@10.5.15";
-import { renderToString } from "https://esm.sh/preact-render-to-string@5.1.19?deps=preact@10.5.15";
+import React from "https://esm.sh/react@18.1.0";
+import { renderToString } from "https://esm.sh/react-dom@18.1.0/server";
 
-const Text = ({ as, children }) => {
-  const Component = as || "span"
-  return <Component>{children}</Component>
-}
+type TextProps<T extends React.ElementType> = {
+  as?: T;
+  children: React.ReactNode;
+} & React.ComponentPropsWithoutRef<T>;
+
+export const Text = <T extends React.ElementType>(
+  { as, children, ...restProps }: TextProps<T>,
+) => {
+  const Component = as || "span";
+  return <Component {...restProps}>{children}</Component>;
+};
 
 function handler(_req: Request): Response {
   const page = (
